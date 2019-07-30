@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:textSize="24sp"
+        android:fontFamily="@font/arkhip_font"
+        android:textColor="#fff"
+        android:text="UBER"
+        android:layout_marginTop="20sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/txtCreated"
+        android:fontFamily="@font/arkhip_font"
+        android:textColor="#fff"
+        android:text="Created by: Mark Joseph"
+        android:layout_marginBottom="20sp"
+        android:layout_centerInParent="true"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="50dp"
+        android:layout_centerInParent="true"
+        android:layout_above="@+id/txtCreated"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    <Button
+        android:id="@+id/btnSignIn"
+        android:textColor="#fff"
+        android:fontFamily="@font/arkhip_font"
+        android:background="@drawable/btn_outlinewhite"
+        android:text="SIGN IN"
+        android:layout_width="150dp"
+        android:layout_height="50dp" />
+
+    <Button
+        android:fontFamily="@font/arkhip_font"
+        android:layout_toRightOf="@+id/btnSignIn"
+        android:id="@+id/btnRegister"
+        android:layout_marginLeft="30sp"
+        android:layout_above="@+id/txtCreated"
+        android:textColor="#fff"
+        android:background="@drawable/btn_outlinewhite"
+        android:text="REGISTER"
+        android:layout_width="150dp"
+        android:layout_height="50dp" />
+
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1025811551526",
+    "firebase_url": "https://tricyclebooking-9b330.firebaseio.com",
+    "project_id": "tricyclebooking-9b330",
+    "storage_bucket": "tricyclebooking-9b330.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1025811551526:android:6acb995600d47379",
+        "android_client_info": {
+          "package_name": "com.example.tricyclebookingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1025811551526-gvd77h1s8agtmkcdpsqirupnoh3bgobe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tricyclebookingapp",
+            "certificate_hash": "ea5c39b262bd00379da69a37251aef2682dd0c57"
+          }
+        },
+        {
+          "client_id": "1025811551526-4bqlp5f257sh43md7do7976ev5pov594.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8tBUHb9gcd_OO6mayxEYxl8jlyT6kzVw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1025811551526-4bqlp5f257sh43md7do7976ev5pov594.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
