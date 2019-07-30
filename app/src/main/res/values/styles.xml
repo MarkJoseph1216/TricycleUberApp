@@ -15,4 +15,10 @@
         <item name="colorControlActivated">#000</item>
     </style>
 
+    <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">#fff</item>
+        <item name="android:textColorPrimary">#fff</item>
+        <item name="android:background">@color/gray</item>
+    </style>
+
 </resources>
