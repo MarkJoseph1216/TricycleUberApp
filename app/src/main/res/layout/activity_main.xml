@@ -9,10 +9,11 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/txtTitle"
         android:textSize="24sp"
         android:fontFamily="@font/arkhip_font"
         android:textColor="#fff"
-        android:text="UBER"
+        android:text="FAKE UBER"
         android:layout_marginTop="20sp"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"

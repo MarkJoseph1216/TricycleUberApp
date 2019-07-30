@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         databaseReference = firebaseDatabase.getReference("Users");
 
         showDialogRegister = new Dialog(MainActivity.this);
+        showDialogLogin = new Dialog(MainActivity.this);
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,21 +84,33 @@ public class MainActivity extends AppCompatActivity {
         btnLoginMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                firebaseAuth.signInWithEmailAndPassword(edtEmailLogin.getText().toString(), edtPasswordLogin.getText().toString())
-                        .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                            @Override
-                            public void onSuccess(AuthResult authResult) {
-                                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                                startActivity(intent);
-                                finish();
-                                showDialogLogin.dismiss();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(MainActivity.this, "Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                if (edtEmailLogin.getText().toString().equals("") || edtPasswordLogin.getText().toString().equals("")) {
+                    Toast.makeText(MainActivity.this, "Field's Are Empty", Toast.LENGTH_SHORT).show();
+                } else {
+                    dialogRegister = new ProgressDialog(MainActivity.this, R.style.AppCompatAlertDialogStyle);
+                    dialogRegister.setMessage("Submitting Information......");
+                    dialogRegister.setCancelable(false);
+                    dialogRegister.setCanceledOnTouchOutside(false);
+                    dialogRegister.show();
+
+                    firebaseAuth.signInWithEmailAndPassword(edtEmailLogin.getText().toString(), edtPasswordLogin.getText().toString())
+                            .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                                @Override
+                                public void onSuccess(AuthResult authResult) {
+                                    dialogRegister.dismiss();
+                                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                    showDialogLogin.dismiss();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            dialogRegister.dismiss();
+                            Toast.makeText(MainActivity.this, "Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         });
         showDialogLogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -123,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
 
                     Toast.makeText(MainActivity.this, "Field's Are Empty!", Toast.LENGTH_SHORT).show();
                 } else {
-                    dialogRegister = new ProgressDialog(MainActivity.this);
+                    dialogRegister = new ProgressDialog(MainActivity.this, R.style.AppCompatAlertDialogStyle);
                     dialogRegister.setMessage("Submitting Information......");
                     dialogRegister.setCancelable(false);
                     dialogRegister.setCanceledOnTouchOutside(false);
@@ -140,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
                                     user.setPhone(edtPhoneNumber.getText().toString());
                                     user.setPassword(edtPassword.getText().toString());
 
-                                    databaseReference.child(user.getEmail()).setValue(user)
+                                    databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user)
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
@@ -151,6 +164,7 @@ public class MainActivity extends AppCompatActivity {
                                             .addOnFailureListener(new OnFailureListener() {
                                                 @Override
                                                 public void onFailure(Exception e) {
+                                                    dialogRegister.dismiss();
                                                     Snackbar.make(relativeLayoutMain, "Failed " + e.getMessage(), Snackbar.LENGTH_SHORT).show();
                                                 }
                                             });
@@ -159,6 +173,7 @@ public class MainActivity extends AppCompatActivity {
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(Exception e) {
+                                    dialogRegister.dismiss();
                                     Snackbar.make(relativeLayoutMain, "Failed " + e.getMessage(), Snackbar.LENGTH_SHORT).show();
                                 }
                             });
