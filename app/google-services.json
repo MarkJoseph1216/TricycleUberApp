@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1025811551526-993rer3a9093ncg7rnbgon0ns3eg71cs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tricyclebookingapp",
+            "certificate_hash": "0850360f346ad0dbe091a1cb22a4055e918f3a2f"
+          }
+        },
+        {
           "client_id": "1025811551526-gvd77h1s8agtmkcdpsqirupnoh3bgobe.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

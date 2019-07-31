@@ -1,5 +1,6 @@
 package com.example.tricyclebookingapp;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -26,6 +27,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import dmax.dialog.SpotsDialog;
+
 public class MainActivity extends AppCompatActivity {
 
     Button btnSignIn, btnRegister;
@@ -40,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
 
     Dialog showDialogRegister, showDialogLogin;
-    ProgressDialog dialogRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,18 +89,15 @@ public class MainActivity extends AppCompatActivity {
                 if (edtEmailLogin.getText().toString().equals("") || edtPasswordLogin.getText().toString().equals("")) {
                     Toast.makeText(MainActivity.this, "Field's Are Empty", Toast.LENGTH_SHORT).show();
                 } else {
-                    dialogRegister = new ProgressDialog(MainActivity.this, R.style.AppCompatAlertDialogStyle);
-                    dialogRegister.setMessage("Submitting Information......");
-                    dialogRegister.setCancelable(false);
-                    dialogRegister.setCanceledOnTouchOutside(false);
-                    dialogRegister.show();
+                    final AlertDialog loadingDialog = new SpotsDialog(MainActivity.this);
+                    loadingDialog.show();
 
                     firebaseAuth.signInWithEmailAndPassword(edtEmailLogin.getText().toString(), edtPasswordLogin.getText().toString())
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
-                                    dialogRegister.dismiss();
-                                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                                    loadingDialog.dismiss();
+                                    Intent intent = new Intent(MainActivity.this, MapsActivity.class);
                                     startActivity(intent);
                                     finish();
                                     showDialogLogin.dismiss();
@@ -106,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                             }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            dialogRegister.dismiss();
+                            loadingDialog.dismiss();
                             Toast.makeText(MainActivity.this, "Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -120,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
     private void showDialogRegister(){
         showDialogRegister.setContentView(R.layout.layout_register);
 
-        relativeLayoutMain = showDialogRegister.findViewById(R.id.relativeLayoutMain);
+        relativeLayoutMain = (RelativeLayout) showDialogRegister.findViewById(R.id.relativeLayoutMain);
         btnRegisterAccount = (Button) showDialogRegister.findViewById(R.id.btnRegisterAccount);
 
         edtEmail = (TextInputEditText) showDialogRegister.findViewById(R.id.edtEmail);
@@ -136,13 +135,10 @@ public class MainActivity extends AppCompatActivity {
 
                     Toast.makeText(MainActivity.this, "Field's Are Empty!", Toast.LENGTH_SHORT).show();
                 } else {
-                    dialogRegister = new ProgressDialog(MainActivity.this, R.style.AppCompatAlertDialogStyle);
-                    dialogRegister.setMessage("Submitting Information......");
-                    dialogRegister.setCancelable(false);
-                    dialogRegister.setCanceledOnTouchOutside(false);
-                    dialogRegister.show();
+                    final AlertDialog loadingDialog = new SpotsDialog(MainActivity.this);
+                    loadingDialog.show();
 
-                    firebaseAuth.createUserWithEmailAndPassword(edtEmail.getText().toString(), edtPassword.getTextColors().toString())
+                    firebaseAuth.createUserWithEmailAndPassword(edtEmail.getText().toString(), edtPassword.getText().toString())
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
@@ -157,14 +153,15 @@ public class MainActivity extends AppCompatActivity {
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
-                                                    dialogRegister.dismiss();
+                                                    loadingDialog.dismiss();
                                                     Toast.makeText(MainActivity.this, "Register Success!", Toast.LENGTH_SHORT).show();
+                                                    showDialogRegister.dismiss();
                                                 }
                                             })
                                             .addOnFailureListener(new OnFailureListener() {
                                                 @Override
                                                 public void onFailure(Exception e) {
-                                                    dialogRegister.dismiss();
+                                                    loadingDialog.dismiss();
                                                     Snackbar.make(relativeLayoutMain, "Failed " + e.getMessage(), Snackbar.LENGTH_SHORT).show();
                                                 }
                                             });
@@ -173,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(Exception e) {
-                                    dialogRegister.dismiss();
+                                    loadingDialog.dismiss();
                                     Snackbar.make(relativeLayoutMain, "Failed " + e.getMessage(), Snackbar.LENGTH_SHORT).show();
                                 }
                             });
